@@ -3,6 +3,7 @@ const app = express();
 
 app.get('/', (req, res) => {
     console.log('get /');
+    console.log(req);
     res.send('<h1>hello there</h1>');
 })
 
