@@ -1,13 +1,17 @@
 const express = require('express')
+const serverless = require('serverless-http')
+
 const app = express();
 
-app.get('/', (req, res) => {
+const router = express.Router();
+
+router.get('/', (req, res) => {
     console.log('get /');
     console.log(req);
     res.send('<h1>hello there</h1>');
 })
 
-app.get('/users', (req, res) => {
+router.get('/users', (req, res) => {
     console.log('get /users')
     res.json([
         {
@@ -21,6 +25,7 @@ app.get('/users', (req, res) => {
     ]);
 })
 
-app.listen(3001, () => {
-    console.log('now listening at port 3001');
-})
+app.use('/.netlify/functions/api', router)
+
+module.exports = app;
+module.exports.handler = serverless(app);
